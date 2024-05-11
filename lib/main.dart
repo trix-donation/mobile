@@ -14,7 +14,6 @@ import 'package:trix_donation/features/auth/presentation/pages/register_page.dar
 
 import 'core/interceptors/access_interceptor.dart';
 import 'core/token_storage.dart';
-import 'features/auth/presentation/pages/email_verification_page.dart';
 import 'features/auth/presentation/pages/welcome_auth_page.dart';
 
 void main() {
@@ -74,12 +73,6 @@ class MyApp extends StatelessWidget {
                 type: PageTransitionType.bottomToTop,
               );
               break;
-            case '/email_verification':
-              return PageTransition(
-                child: EmailVerificationPage(),
-                type: PageTransitionType.rightToLeftWithFade,
-              );
-              break;
             default:
               return null;
           }
@@ -87,7 +80,6 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const StartingApp(),
           '/welcome_auth': (context) => const WelcomeAuthPage(),
-          // '/login': (context) => const LoginPage(),
           '/home': (context) => const WelcomeAuthPage(),
         });
   }

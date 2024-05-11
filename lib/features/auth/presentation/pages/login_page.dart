@@ -32,10 +32,12 @@ class LoginPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, top: 10),
                     child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back),
+                      color: text100Color,
+                    ),
                   ),
                   const SizedBox(height: 20),
                   Padding(
@@ -63,9 +65,9 @@ class LoginPage extends StatelessWidget {
       bottomSheet: Container(
         padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
         width: double.infinity,
-        decoration: const BoxDecoration(
-          color: bg100Color,
-          borderRadius: BorderRadius.vertical(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: const BorderRadius.vertical(
             top: Radius.circular(40),
           ),
         ),
@@ -74,17 +76,23 @@ class LoginPage extends StatelessWidget {
             children: [
               const SizedBox(height: 40),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Email',
+                  labelStyle:
+                      bodyMedium14Text.copyWith(color: Theme.of(context).colorScheme.onBackground),
                   hintText: 'hello@world.ua',
                 ),
               ),
               const SizedBox(height: 28),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Пароль',
+                  labelStyle:
+                      bodyMedium14Text.copyWith(color: Theme.of(context).colorScheme.onBackground),
                   hintText: '************',
                 ),
               ),
@@ -96,7 +104,9 @@ class LoginPage extends StatelessWidget {
                   },
                   child: Text(
                     'Забули пароль?',
-                    style: bodySemiBold14Text,
+                    style: bodySemiBold14Text.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
                   ),
                 ),
               ),
@@ -107,19 +117,25 @@ class LoginPage extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: primary100Color,
+                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                 ),
-                child: Wrap(children: [
-                  Text(
-                    'Авторизація',
-                    style: bodySemiBoldText,
-                  ),
-                  const SizedBox(width: 8),
-                  const Icon(
-                    Icons.login,
-                    size: 24,
-                  ),
-                ]),
+                child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Авторизація',
+                        style: bodySemiBoldText.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(
+                        Icons.login,
+                        size: 24,
+                      ),
+                    ]),
               ),
               const SizedBox(height: 50),
               Row(
@@ -127,7 +143,9 @@ class LoginPage extends StatelessWidget {
                 children: [
                   Text(
                     'Немаєте акаунту?',
-                    style: bodySemiBold14Text,
+                    style: bodySemiBold14Text.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
                   ),
                   TextButton(
                     onPressed: () {

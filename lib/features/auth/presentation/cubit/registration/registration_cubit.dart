@@ -16,16 +16,20 @@ class RegistrationCubit extends Cubit<RegistrationState> {
     emit(RegistrationLoading());
 
     await Future.delayed(const Duration(seconds: 1));
+    try {
+      final response = await dio.post(_registerURL, data: {'email': email, 'password': password});
 
-    final response = await dio.post(_registerURL, data: {'email': email, 'password': password});
+      if (response.statusCode != 201) {
+        emit(RegistrationFailure('Реєстрація не вдалась. Можливо вже є користувач з таким email.'));
+        return;
+      }
 
-    if (response.statusCode != 201) {
-      emit(RegistrationFailure('Реєстрація не вдалась. Можливо вже є користувач з таким email.'));
-      return;
-    }
-
-    if (response.statusCode == 201) {
-      emit(RegistrationSuccess());
+      if (response.statusCode == 201) {
+        emit(RegistrationSuccess());
+      }
+    } on DioException catch (e) {
+      emit(RegistrationFailure(
+          "Користувач з таким email вже існує або щось пішло не так. Спробуйте ще раз."));
     }
   }
 }

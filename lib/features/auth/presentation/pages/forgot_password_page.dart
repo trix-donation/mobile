@@ -33,10 +33,12 @@ class ForgotPasswordPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, top: 10, bottom: 10),
                     child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back),
+                      color: text100Color,
+                    ),
                   ),
                   Align(
                     alignment: Alignment.center,
@@ -55,9 +57,9 @@ class ForgotPasswordPage extends StatelessWidget {
       bottomSheet: Container(
         padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 40),
         width: double.infinity,
-        decoration: const BoxDecoration(
-          color: bg100Color,
-          borderRadius: BorderRadius.vertical(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: const BorderRadius.vertical(
             top: Radius.circular(40),
           ),
         ),
@@ -68,18 +70,22 @@ class ForgotPasswordPage extends StatelessWidget {
               const SizedBox(height: 40),
               Text(
                 'Забули пароль?',
-                style: headlineSemiBoldText,
+                style: headlineSemiBoldText.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground),
               ),
               const SizedBox(height: 4),
               Text(
                 'Долучіться до зборів, тим самим допоміжть волонтарам реалізувати їхню допомогу!',
-                style: bodyMediumText,
+                style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
               ),
               const SizedBox(height: 28),
               TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Email',
+                  labelStyle:
+                      bodyMedium14Text.copyWith(color: Theme.of(context).colorScheme.onBackground),
                   hintText: 'hello@world.ua',
                 ),
               ),
@@ -92,12 +98,13 @@ class ForgotPasswordPage extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    backgroundColor: primary100Color,
+                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                   ),
                   child: Wrap(children: [
                     Text(
                       'Відновити пароль',
-                      style: bodySemiBoldText,
+                      style: bodySemiBoldText.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimaryContainer),
                     ),
                   ]),
                 ),

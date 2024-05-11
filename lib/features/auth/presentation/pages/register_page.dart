@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trix_donation/core/theme/colors.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
 import 'package:trix_donation/features/auth/presentation/cubit/registration/registration_cubit.dart';
+import 'package:trix_donation/features/auth/presentation/pages/email_verification_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -47,10 +48,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, top: 10),
                     child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back),
+                      color: text100Color,
+                    ),
                   ),
                   const SizedBox(height: 20),
                   Padding(
@@ -78,9 +81,9 @@ class _RegisterPageState extends State<RegisterPage> {
       bottomSheet: Container(
         padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
         width: double.infinity,
-        decoration: const BoxDecoration(
-          color: bg100Color,
-          borderRadius: BorderRadius.vertical(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: const BorderRadius.vertical(
             top: Radius.circular(40),
           ),
         ),
@@ -91,32 +94,41 @@ class _RegisterPageState extends State<RegisterPage> {
               children: [
                 const SizedBox(height: 40),
                 TextFormField(
+                  style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
                   controller: emailController,
                   validator: emailValidator,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelStyle: bodyMedium14Text.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground),
                     labelText: 'Email',
                     hintText: 'hello@world.ua',
                   ),
                 ),
                 const SizedBox(height: 28),
                 TextFormField(
+                  style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
                   controller: passwordController,
                   validator: passwordValidator,
                   obscureText: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     labelText: 'Пароль',
+                    labelStyle: bodyMedium14Text.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground),
                     hintText: '************',
                   ),
                 ),
                 const SizedBox(height: 28),
                 TextFormField(
+                  style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
                   controller: confirmPasswordController,
                   validator: samePasswordValidator,
                   obscureText: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelStyle: bodyMedium14Text.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground),
                     labelText: 'Повторіть пароль',
                     hintText: '************',
                   ),
@@ -126,8 +138,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   bloc: registrationCubit,
                   listener: (context, state) {
                     if (state is RegistrationSuccess) {
-                      Navigator.pushNamed(context, '/email_verification',
-                          arguments: emailController.text);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  EmailVerificationPage(email: emailController.text)));
                     } else if (state is RegistrationFailure) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -143,7 +158,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     if (state is RegistrationLoading) {
                       return const CircularProgressIndicator();
                     }
-
                     return ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
@@ -152,19 +166,23 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                        backgroundColor: primary100Color,
+                        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                       ),
-                      child: Wrap(children: [
-                        Text(
-                          'Зареєструватись',
-                          style: bodySemiBoldText,
-                        ),
-                        const SizedBox(width: 8),
-                        const Icon(
-                          Icons.login,
-                          size: 24,
-                        ),
-                      ]),
+                      child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Зареєструватись',
+                              style: bodySemiBoldText.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Icon(Icons.login,
+                                size: 24, color: Theme.of(context).colorScheme.onPrimaryContainer),
+                          ]),
                     );
                   },
                 ),
@@ -172,10 +190,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Маєте акаунт?',
-                      style: bodySemiBold14Text,
-                    ),
+                    Text('Маєте акаунт?',
+                        style: bodyMedium14Text.copyWith(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        )),
                     TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/login');

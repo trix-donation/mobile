@@ -21,76 +21,90 @@ class WelcomeAuthPage extends StatelessWidget {
             ],
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            SvgPicture.asset(
-              'asset/images/Logo.svg',
-              width: 300,
-              height: 300,
-            ),
-            const SizedBox(height: 100),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: const BoxDecoration(
-                color: bg100Color,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(40),
-                ),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 60),
+              SvgPicture.asset(
+                'asset/images/Logo.svg',
+                width: 300,
+                height: 300,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(height: 40),
-                    Text(
-                      'Вітаємо!',
-                      style: headlineSemiBoldText,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Долучіться до зборів, тим самим допоміжть волонтарам реалізувати їхню допомогу!',
-                      style: bodyMediumText,
-                    ),
-                    const SizedBox(height: 48),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/login');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                        backgroundColor: primary100Color,
-                      ),
-                      child: Wrap(children: [
+            ],
+          ),
+        ),
+      ),
+      bottomSheet: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(40),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 40),
+                Text(
+                  'Вітаємо!',
+                  style: headlineSemiBoldText.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Долучіться до зборів, тим самим допоміжть волонтарам реалізувати їхню допомогу!',
+                  style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                ),
+                const SizedBox(height: 48),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                  ),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
                         Text(
                           'Авторизація',
-                          style: bodySemiBoldText,
+                          style: bodySemiBoldText.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryContainer),
                         ),
                         const SizedBox(width: 8),
-                        const Icon(
+                        Icon(
                           Icons.login,
                           size: 24,
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                       ]),
-                    ),
-                    const SizedBox(height: 14),
-                    OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10)),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/register');
-                        },
-                        child: Text(
-                          'Зареєструватись',
-                          style: bodyMedium14Text,
-                        )),
-                    const SizedBox(height: 36),
-                  ],
                 ),
-              ),
+                const SizedBox(height: 14),
+                OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                            color: Theme.of(context).colorScheme.primaryContainer, width: 2),
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10)),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/register');
+                    },
+                    child: Text(
+                      'Зареєструватись',
+                      style: bodyMedium14Text.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimaryContainer),
+                    )),
+                const SizedBox(height: 36),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
