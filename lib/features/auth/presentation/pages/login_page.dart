@@ -138,9 +138,9 @@ class _LoginPageState extends State<LoginPage> {
                   bloc: loginCubit,
                   listener: (context, state) {
                     if (state is LoginSuccess) {
-                      Navigator.pushNamed(context, '/home');
+                      // open home page and close everything else
+                      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
                     }
-
                     if (state is LoginFailure) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

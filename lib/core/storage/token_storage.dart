@@ -14,9 +14,9 @@ class TokenStorage {
   static const _serverEndpoint = "http://3.71.89.121/users/api";
 
   Future<void> checkAccessToken() async {
-    if (kDebugMode) {
-      SharedPreferences.getInstance().then((value) => value.clear());
-    }
+    // if (kDebugMode) {
+    //   SharedPreferences.getInstance().then((value) => value.clear());
+    // }
 
     _refreshTokenKey = await getRefreshToken();
     accessTokenKey = await getAccessToken();

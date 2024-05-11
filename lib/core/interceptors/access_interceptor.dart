@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../token_storage.dart';
+import '../storage/token_storage.dart';
 
 class AccessInterceptor extends Interceptor {
   @override

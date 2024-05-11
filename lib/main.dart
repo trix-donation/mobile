@@ -12,9 +12,10 @@ import 'package:trix_donation/features/auth/presentation/cubit/auth_check_cubit.
 import 'package:trix_donation/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:trix_donation/features/auth/presentation/pages/login_page.dart';
 import 'package:trix_donation/features/auth/presentation/pages/register_page.dart';
+import 'package:trix_donation/features/onBoarding/presentation/pages/onBoarding_page.dart';
 
 import 'core/interceptors/access_interceptor.dart';
-import 'core/token_storage.dart';
+import 'core/storage/token_storage.dart';
 import 'features/auth/presentation/pages/welcome_auth_page.dart';
 
 void main() {
@@ -70,6 +71,11 @@ class MyApp extends StatelessWidget {
               return PageTransition(
                 child: const ForgotPasswordPage(),
                 type: PageTransitionType.bottomToTop,
+              );
+            case '/onBoarding':
+              return PageTransition(
+                child: const OnBoardingPage(),
+                type: PageTransitionType.fade,
               );
             default:
               return null;

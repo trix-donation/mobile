@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
-import 'package:trix_donation/core/token_storage.dart';
+import 'package:trix_donation/core/storage/token_storage.dart';
 
 part 'login_state.dart';
 
