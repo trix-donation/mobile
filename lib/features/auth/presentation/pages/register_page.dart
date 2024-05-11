@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trix_donation/core/theme/colors.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
+import 'package:trix_donation/features/auth/presentation/cubit/registration/registration_cubit.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+  final registrationCubit = RegistrationCubit();
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -70,78 +85,151 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-              TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Повне ім\'я',
-                  hintText: 'Тарас Донатченко',
-                ),
-              ),
-              const SizedBox(height: 28),
-              TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
-                  hintText: 'hello@world.ua',
-                ),
-              ),
-              const SizedBox(height: 28),
-              TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Пароль',
-                  hintText: '************',
-                ),
-              ),
-              const SizedBox(height: 90),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/email_verification');
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: primary100Color,
-                ),
-                child: Wrap(children: [
-                  Text(
-                    'Зареєструватись',
-                    style: bodySemiBoldText,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const SizedBox(height: 40),
+                TextFormField(
+                  controller: emailController,
+                  validator: emailValidator,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email',
+                    hintText: 'hello@world.ua',
                   ),
-                  const SizedBox(width: 8),
-                  const Icon(
-                    Icons.login,
-                    size: 24,
+                ),
+                const SizedBox(height: 28),
+                TextFormField(
+                  controller: passwordController,
+                  validator: passwordValidator,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Пароль',
+                    hintText: '************',
                   ),
-                ]),
-              ),
-              const SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Маєте акаунт?',
-                    style: bodySemiBold14Text,
+                ),
+                const SizedBox(height: 28),
+                TextFormField(
+                  controller: confirmPasswordController,
+                  validator: samePasswordValidator,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Повторіть пароль',
+                    hintText: '************',
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/login');
-                    },
-                    child: Text(
-                      'Авторизуватись',
-                      style: bodySemiBold14Text.copyWith(
-                        color: primary100Color,
+                ),
+                const SizedBox(height: 90),
+                BlocConsumer<RegistrationCubit, RegistrationState>(
+                  bloc: registrationCubit,
+                  listener: (context, state) {
+                    if (state is RegistrationSuccess) {
+                      Navigator.pushNamed(context, '/email_verification',
+                          arguments: emailController.text);
+                    } else if (state is RegistrationFailure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message,
+                              style: bodyMediumText.copyWith(
+                                  color: Theme.of(context).colorScheme.onError)),
+                          backgroundColor: Theme.of(context).colorScheme.error,
+                        ),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is RegistrationLoading) {
+                      return const CircularProgressIndicator();
+                    }
+
+                    return ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          registrationCubit.register(emailController.text, passwordController.text);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        backgroundColor: primary100Color,
                       ),
+                      child: Wrap(children: [
+                        Text(
+                          'Зареєструватись',
+                          style: bodySemiBoldText,
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.login,
+                          size: 24,
+                        ),
+                      ]),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Маєте акаунт?',
+                      style: bodySemiBold14Text,
                     ),
-                  )
-                ],
-              )
-            ],
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/login');
+                      },
+                      child: Text(
+                        'Авторизуватись',
+                        style: bodySemiBold14Text.copyWith(
+                          color: primary100Color,
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  String? emailValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Введіть email';
+    }
+
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+      return 'Введіть коректний email';
+    }
+
+    return null;
+  }
+
+  String? samePasswordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Повторіть пароль';
+    }
+
+    if (value != passwordController.text) {
+      return 'Паролі не співпадають';
+    }
+
+    return null;
+  }
+
+  String? passwordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Введіть пароль';
+    }
+
+    if (value.length < 6) {
+      return 'Пароль повинен бути не менше 6 символів';
+    }
+
+    return null;
   }
 }
