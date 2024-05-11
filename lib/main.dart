@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:trix_donation/core/pages/home_page/home_page.dart';
+import 'package:trix_donation/core/storage/first_time_enter_storage.dart';
 import 'package:trix_donation/core/theme/colors.dart';
 import 'package:trix_donation/core/theme/theme.dart';
 import 'package:trix_donation/features/auth/presentation/cubit/auth_check_cubit.dart';
@@ -25,6 +26,9 @@ void main() {
   GetIt.I.registerSingleton<TokenStorage>(TokenStorage());
   GetIt.I.registerSingleton<Dio>(Dio());
   addInterceptors(GetIt.I<Dio>());
+
+  GetIt.I.registerSingleton<FirstTimeEnterStorage>(FirstTimeEnterStorage());
+  GetIt.I<FirstTimeEnterStorage>().checkFirstTimeEnter();
 
   Future.delayed(const Duration(seconds: 1), () {
     runApp(const MyApp());
@@ -72,11 +76,6 @@ class MyApp extends StatelessWidget {
                 child: const ForgotPasswordPage(),
                 type: PageTransitionType.bottomToTop,
               );
-            case '/onBoarding':
-              return PageTransition(
-                child: const OnBoardingPage(),
-                type: PageTransitionType.fade,
-              );
             default:
               return null;
           }
@@ -85,6 +84,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => const StartingApp(),
           '/welcome_auth': (context) => const WelcomeAuthPage(),
           '/home': (context) => const HomePage(),
+          '/onBoarding': (context) => const OnBoardingPage(),
         });
   }
 }

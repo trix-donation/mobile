@@ -541,7 +541,7 @@ class CustomTextTheme {
   TextStyle get displaylarge => const TextStyle(
         fontSize: 57,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         height: 64 / 57,
@@ -551,7 +551,7 @@ class CustomTextTheme {
   TextStyle get displaymedium => const TextStyle(
         fontSize: 45,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         height: 52 / 45,
@@ -561,7 +561,7 @@ class CustomTextTheme {
   TextStyle get displaysmall => const TextStyle(
         fontSize: 36,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         height: 44 / 36,
@@ -571,7 +571,7 @@ class CustomTextTheme {
   TextStyle get headlinelarge => const TextStyle(
         fontSize: 32,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         height: 40 / 32,
@@ -581,7 +581,7 @@ class CustomTextTheme {
   TextStyle get headlinemedium => const TextStyle(
         fontSize: 28,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         height: 36 / 28,
@@ -591,7 +591,7 @@ class CustomTextTheme {
   TextStyle get headlinesmall => const TextStyle(
         fontSize: 24,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         height: 32 / 24,
@@ -601,7 +601,7 @@ class CustomTextTheme {
   TextStyle get titlelarge => const TextStyle(
         fontSize: 22,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         height: 28 / 22,
@@ -611,7 +611,7 @@ class CustomTextTheme {
   TextStyle get titlemedium => const TextStyle(
         fontSize: 16,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Medium',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w500,
         height: 24 / 16,
@@ -621,7 +621,7 @@ class CustomTextTheme {
   TextStyle get titlesmall => const TextStyle(
         fontSize: 14,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Medium',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w500,
         height: 20 / 14,
@@ -631,7 +631,7 @@ class CustomTextTheme {
   TextStyle get bodylarge => const TextStyle(
         fontSize: 16,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         height: 24 / 16,
@@ -641,7 +641,7 @@ class CustomTextTheme {
   TextStyle get bodymedium => const TextStyle(
         fontSize: 14,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         height: 20 / 14,
@@ -651,7 +651,7 @@ class CustomTextTheme {
   TextStyle get bodysmall => const TextStyle(
         fontSize: 12,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         height: 16 / 12,
@@ -661,7 +661,7 @@ class CustomTextTheme {
   TextStyle get labellargeprominent => const TextStyle(
         fontSize: 14,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-SemiBold',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
         height: 20 / 14,
@@ -671,7 +671,7 @@ class CustomTextTheme {
   TextStyle get labellarge => const TextStyle(
         fontSize: 14,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Medium',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w500,
         height: 20 / 14,
@@ -681,7 +681,7 @@ class CustomTextTheme {
   TextStyle get labelmediumprominent => const TextStyle(
         fontSize: 12,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-SemiBold',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
         height: 16 / 12,
@@ -691,7 +691,7 @@ class CustomTextTheme {
   TextStyle get labelmedium => const TextStyle(
         fontSize: 12,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Medium',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w500,
         height: 16 / 12,
@@ -701,7 +701,7 @@ class CustomTextTheme {
   TextStyle get labelsmall => const TextStyle(
         fontSize: 11,
         decoration: TextDecoration.none,
-        fontFamily: 'Montserrat-Medium',
+        fontFamily: 'Montserrat',
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w500,
         height: 16 / 11,
