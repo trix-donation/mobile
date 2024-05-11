@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
 import 'package:trix_donation/core/widgets/line_progress_of_zbir.dart';
@@ -70,9 +71,11 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       color: Colors.white,
-      child: Image.network(
-        'https://picsum.photos/400/600',
-        fit: BoxFit.cover,
+      child: CachedNetworkImage(
+        imageUrl: 'https://picsum.photos/400?image=4',
+        fit: BoxFit.fill,
+        progressIndicatorBuilder: (context, url, downloadProgress) =>
+            Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
       ),
     );
   }

@@ -1,11 +1,28 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
-import 'package:trix_donation/features/detailed_card_page.dart';
+import 'package:trix_donation/features/detailed_card_page/presentation/pages/detailed_card_page.dart';
 
 import 'line_progress_of_zbir.dart';
 
 class ZbirCard extends StatelessWidget {
-  const ZbirCard({super.key});
+  const ZbirCard(
+      {super.key,
+      required this.organizationName,
+      required this.organizationType,
+      required this.collectionImage,
+      required this.collectionTitle,
+      required this.collectionDescription,
+      required this.collectionCollectedAmount,
+      required this.collectionGoalAmount});
+
+  final String organizationName;
+  final String organizationType;
+  final String collectionImage;
+  final String collectionTitle;
+  final String collectionDescription;
+  final double collectionCollectedAmount;
+  final double collectionGoalAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +40,13 @@ class ZbirCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CircleAvatar(
-                    radius: 34,
-                    backgroundImage: NetworkImage('https://picsum.photos/200/300'),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
+                  // const CircleAvatar(
+                  //   radius: 34,
+                  //   backgroundImage: NetworkImage('https://picsum.photos/200/300'),
+                  // ),
+                  // const SizedBox(
+                  //   width: 16,
+                  // ),
                   SizedBox(
                     width: 180,
                     child: Column(
@@ -37,13 +54,13 @@ class ZbirCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Притула',
+                          organizationName,
                           style: bodySemiBoldText.copyWith(
                               color: Theme.of(context).colorScheme.primary),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        Text('Благодійний Фонд',
+                        Text(organizationType,
                             style: bodyMedium14Text.copyWith(
                                 color: Theme.of(context).colorScheme.secondary),
                             maxLines: 1,
@@ -62,25 +79,30 @@ class ZbirCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-                width: double.infinity,
-                height: 200,
-                child: Image.network('https://picsum.photos/300/500', fit: BoxFit.fill)),
+              width: double.infinity,
+              height: 200,
+              child: CachedNetworkImage(
+                imageUrl: collectionImage,
+                fit: BoxFit.fill,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Опис',
+                  Text(collectionTitle,
                       style: bodySemiBoldText.copyWith(
                           color: Theme.of(context).colorScheme.onPrimaryContainer)),
-                  Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, eleifend nunc',
+                  Text(collectionDescription,
                       style: bodyMedium14Text.copyWith(
                           color: Theme.of(context).colorScheme.onPrimaryContainer)),
                   const SizedBox(height: 24),
-                  const LineProgressOfZbir(
-                    collected: 80000,
-                    goal: 300000,
+                  LineProgressOfZbir(
+                    collected: collectionCollectedAmount,
+                    goal: collectionGoalAmount,
                   )
                 ],
               ),
