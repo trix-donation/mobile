@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trix_donation/core/theme/colors.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
+import 'package:trix_donation/core/validators/auth_validators.dart';
+import 'package:trix_donation/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:trix_donation/features/auth/presentation/pages/email_verification_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final _loginFormKey = GlobalKey<FormState>();
+
+  LoginCubit loginCubit = LoginCubit();
 
   @override
   Widget build(BuildContext context) {
@@ -71,96 +87,149 @@ class LoginPage extends StatelessWidget {
             top: Radius.circular(40),
           ),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-              TextField(
-                style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Email',
-                  labelStyle:
-                      bodyMedium14Text.copyWith(color: Theme.of(context).colorScheme.onBackground),
-                  hintText: 'hello@world.ua',
-                ),
-              ),
-              const SizedBox(height: 28),
-              TextField(
-                style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Пароль',
-                  labelStyle:
-                      bodyMedium14Text.copyWith(color: Theme.of(context).colorScheme.onBackground),
-                  hintText: '************',
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/forgot_password');
-                  },
-                  child: Text(
-                    'Забули пароль?',
-                    style: bodySemiBold14Text.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
+        child: Form(
+          key: _loginFormKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 40),
+                TextFormField(
+                  validator: emailValidator,
+                  style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Email',
+                    labelStyle: bodyMedium14Text.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground),
+                    hintText: 'hello@world.ua',
                   ),
                 ),
-              ),
-              const SizedBox(height: 90),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/email_verification');
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                ),
-                child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Авторизація',
-                        style: bodySemiBoldText.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(
-                        Icons.login,
-                        size: 24,
-                      ),
-                    ]),
-              ),
-              const SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Немаєте акаунту?',
-                    style: bodySemiBold14Text.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
+                const SizedBox(height: 28),
+                TextFormField(
+                  controller: _passwordController,
+                  validator: passwordValidator,
+                  style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Пароль',
+                    labelStyle: bodyMedium14Text.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground),
+                    hintText: '************',
                   ),
-                  TextButton(
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/register');
+                      Navigator.pushNamed(context, '/forgot_password');
                     },
                     child: Text(
-                      'Зареєструватись',
+                      'Забули пароль?',
                       style: bodySemiBold14Text.copyWith(
-                        color: primary100Color,
+                        color: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
-                  )
-                ],
-              )
-            ],
+                  ),
+                ),
+                const SizedBox(height: 90),
+                BlocConsumer<LoginCubit, LoginState>(
+                  bloc: loginCubit,
+                  listener: (context, state) {
+                    if (state is LoginSuccess) {
+                      Navigator.pushNamed(context, '/home');
+                    }
+
+                    if (state is LoginFailure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message,
+                              style: bodyMediumText.copyWith(
+                                  color: Theme.of(context).colorScheme.onError)),
+                          backgroundColor: Theme.of(context).colorScheme.errorContainer,
+                        ),
+                      );
+                    }
+
+                    if (state is LoginNeedActivateEmail) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message,
+                              style: bodyMediumText.copyWith(
+                                  color: Theme.of(context).colorScheme.secondaryContainer)),
+                          backgroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
+                        ),
+                      );
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EmailVerificationPage(email: state.email)));
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is LoginLoading) {
+                      return const CircularProgressIndicator();
+                    }
+
+                    return ElevatedButton(
+                      onPressed: () {
+                        if (_loginFormKey.currentState!.validate()) {
+                          loginCubit.login(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                      child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Авторизація',
+                              style: bodySemiBoldText.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Icon(
+                              Icons.login,
+                              size: 24,
+                            ),
+                          ]),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Немаєте акаунту?',
+                      style: bodySemiBold14Text.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/register');
+                      },
+                      child: Text(
+                        'Зареєструватись',
+                        style: bodySemiBold14Text.copyWith(
+                          color: primary100Color,
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

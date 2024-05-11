@@ -45,7 +45,7 @@ class EmailVerificationCubit extends Cubit<EmailVerificationState> {
 
       if (response.statusCode == 200) {
         if (response.data['valid']) {
-          emit(EmailVerificationSended('Email підтверджено успішно'));
+          emit(EmailVerificationCodeVerified('Email підтверджено успішно'));
         } else {
           emit(EmailVerificationCodeError("Не вдалось підтвердити email. Спробуйте пізніше."));
         }

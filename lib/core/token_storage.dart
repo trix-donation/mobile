@@ -31,7 +31,7 @@ class TokenStorage {
     return;
   }
 
-  static Future<String?> updateAccessToken() async {
+  Future<String?> updateAccessToken() async {
     Dio dio = Dio();
 
     try {
@@ -55,25 +55,25 @@ class TokenStorage {
     return null;
   }
 
-  static Future<void> setAccessToken(String sessionToken) async {
+  Future<void> setAccessToken(String accessToken) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setString(_accessTokenStorageKey, sessionToken);
+    prefs.setString(_accessTokenStorageKey, accessToken);
   }
 
-  static Future<String?> getAccessToken() async {
+  Future<String?> getAccessToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return prefs.getString(_accessTokenStorageKey);
   }
 
-  static Future<void> setRefreshToken(String sessionToken) async {
+  Future<void> setRefreshToken(String refreshToken) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setString(_refreshTokenStorageKey, sessionToken);
+    prefs.setString(_refreshTokenStorageKey, refreshToken);
   }
 
-  static Future<String?> getRefreshToken() async {
+  Future<String?> getRefreshToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return prefs.getString(_refreshTokenStorageKey);

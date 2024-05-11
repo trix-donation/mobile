@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
-import 'package:trix_donation/core/pages/home_page/home_page.dart';
 import 'package:trix_donation/core/theme/colors.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
 import 'package:trix_donation/features/auth/presentation/cubit/email_verification/email_verification_cubit.dart';
@@ -159,14 +158,13 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                     );
                   }
                   if (state is EmailVerificationCodeVerified) {
+                    Navigator.pushNamed(context, '/login');
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(state.message,
                           style: bodyMediumText.copyWith(
                               color: Theme.of(context).colorScheme.onTertiaryContainer)),
                       backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
                     ));
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => const HomePage()));
                   }
                   if (state is EmailVerificationCodeError) {
                     ScaffoldMessenger.of(context).showSnackBar(

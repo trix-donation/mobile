@@ -5,6 +5,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:trix_donation/core/pages/home_page/home_page.dart';
 import 'package:trix_donation/core/theme/colors.dart';
 import 'package:trix_donation/core/theme/theme.dart';
 import 'package:trix_donation/features/auth/presentation/cubit/auth_check_cubit.dart';
@@ -57,22 +58,19 @@ class MyApp extends StatelessWidget {
           switch (settings.name) {
             case '/login':
               return PageTransition(
-                child: LoginPage(),
+                child: const LoginPage(),
                 type: PageTransitionType.rightToLeftWithFade,
               );
-              break;
             case '/register':
               return PageTransition(
-                child: RegisterPage(),
+                child: const RegisterPage(),
                 type: PageTransitionType.rightToLeftWithFade,
               );
-              break;
             case '/forgot_password':
               return PageTransition(
-                child: ForgotPasswordPage(),
+                child: const ForgotPasswordPage(),
                 type: PageTransitionType.bottomToTop,
               );
-              break;
             default:
               return null;
           }
@@ -80,7 +78,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const StartingApp(),
           '/welcome_auth': (context) => const WelcomeAuthPage(),
-          '/home': (context) => const WelcomeAuthPage(),
+          '/home': (context) => const HomePage(),
         });
   }
 }
@@ -124,7 +122,7 @@ class _StartingAppState extends State<StartingApp> {
               },
               listener: (context, state) {
                 if (state is AuthCheckAuthorized) {
-                  // Navigator.pushNamed(context, '/home');
+                  Navigator.pushNamed(context, '/home');
                   FlutterNativeSplash.remove();
                   debugPrint("Authorized");
                 }

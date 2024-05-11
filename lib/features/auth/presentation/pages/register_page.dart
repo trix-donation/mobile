@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trix_donation/core/theme/colors.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
+import 'package:trix_donation/core/validators/auth_validators.dart';
 import 'package:trix_donation/features/auth/presentation/cubit/registration/registration_cubit.dart';
 import 'package:trix_donation/features/auth/presentation/pages/email_verification_page.dart';
 
@@ -215,18 +216,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  String? emailValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Введіть email';
-    }
-
-    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-      return 'Введіть коректний email';
-    }
-
-    return null;
-  }
-
   String? samePasswordValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Повторіть пароль';
@@ -234,18 +223,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (value != passwordController.text) {
       return 'Паролі не співпадають';
-    }
-
-    return null;
-  }
-
-  String? passwordValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Введіть пароль';
-    }
-
-    if (value.length < 6) {
-      return 'Пароль повинен бути не менше 6 символів';
     }
 
     return null;
