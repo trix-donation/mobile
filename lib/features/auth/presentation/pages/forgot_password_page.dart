@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:trix_donation/core/theme/colors.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
+import 'package:trix_donation/features/auth/presentation/cubit/forgot_password/forgot_password_cubit.dart';
 
-class ForgotPasswordPage extends StatelessWidget {
+import 'change_forgot_password_page.dart';
+
+class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
+
+  @override
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+}
+
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  final ForgotPasswordCubit _forgotPasswordCubit = ForgotPasswordCubit();
+
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +94,7 @@ class ForgotPasswordPage extends StatelessWidget {
               const SizedBox(height: 28),
               TextField(
                 style: bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground),
+                controller: _emailController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: 'Email',
@@ -90,24 +104,56 @@ class ForgotPasswordPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 90),
-              Align(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                  ),
-                  child: Wrap(children: [
-                    Text(
-                      'Відновити пароль',
-                      style: bodySemiBoldText.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimaryContainer),
+              BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+                bloc: _forgotPasswordCubit,
+                listener: (context, state) {
+                  if (state is ForgotPasswordSuccess) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChangeForgotPasswordPage(
+                          email: _emailController.text,
+                        ),
+                      ),
+                    );
+                  }
+
+                  if (state is ForgotPasswordFailure) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.message,
+                            style: bodyMediumText.copyWith(
+                                color: Theme.of(context).colorScheme.onError)),
+                        backgroundColor: Theme.of(context).colorScheme.errorContainer,
+                      ),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  if (state is ForgotPasswordLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  return Align(
+                    alignment: Alignment.center,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _forgotPasswordCubit.forgotPassword(_emailController.text);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                      child: Wrap(children: [
+                        Text(
+                          'Відновити пароль',
+                          style: bodySemiBoldText.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryContainer),
+                        ),
+                      ]),
                     ),
-                  ]),
-                ),
+                  );
+                },
               ),
             ],
           ),

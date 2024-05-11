@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenStorage {
@@ -14,6 +14,10 @@ class TokenStorage {
   static const _serverEndpoint = "http://3.71.89.121/users/api";
 
   Future<void> checkAccessToken() async {
+    if (kDebugMode) {
+      SharedPreferences.getInstance().then((value) => value.clear());
+    }
+
     _refreshTokenKey = await getRefreshToken();
     accessTokenKey = await getAccessToken();
 

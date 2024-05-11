@@ -122,7 +122,8 @@ class _StartingAppState extends State<StartingApp> {
               },
               listener: (context, state) {
                 if (state is AuthCheckAuthorized) {
-                  Navigator.pushNamed(context, '/home');
+                  // open home and close everything else
+                  Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
                   FlutterNativeSplash.remove();
                   debugPrint("Authorized");
                 }

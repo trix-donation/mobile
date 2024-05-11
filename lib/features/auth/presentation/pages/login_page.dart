@@ -144,11 +144,10 @@ class _LoginPageState extends State<LoginPage> {
                     if (state is LoginFailure) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(state.message,
-                              style: bodyMediumText.copyWith(
-                                  color: Theme.of(context).colorScheme.onError)),
-                          backgroundColor: Theme.of(context).colorScheme.errorContainer,
-                        ),
+                            content: Text(state.message,
+                                style: bodyMediumText.copyWith(
+                                    color: Theme.of(context).colorScheme.onErrorContainer)),
+                            backgroundColor: Theme.of(context).colorScheme.errorContainer),
                       );
                     }
 

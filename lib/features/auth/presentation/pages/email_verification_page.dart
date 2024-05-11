@@ -158,13 +158,13 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                     );
                   }
                   if (state is EmailVerificationCodeVerified) {
-                    Navigator.pushNamed(context, '/login');
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(state.message,
                           style: bodyMediumText.copyWith(
                               color: Theme.of(context).colorScheme.onTertiaryContainer)),
                       backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
                     ));
+                    Navigator.pushNamed(context, '/login');
                   }
                   if (state is EmailVerificationCodeError) {
                     ScaffoldMessenger.of(context).showSnackBar(
