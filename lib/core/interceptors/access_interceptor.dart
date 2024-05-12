@@ -5,10 +5,8 @@ import '../storage/token_storage.dart';
 class AccessInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final accessToken = TokenStorage.accessTokenKey;
-
-    if (accessToken != null) {
-      options.headers['Authorization'] = 'Bearer $accessToken';
+    if (TokenStorage.accessTokenKey != null) {
+      options.headers['Authorization'] = 'Bearer ${TokenStorage.accessTokenKey}';
     }
 
     super.onRequest(options, handler);

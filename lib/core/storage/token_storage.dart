@@ -6,14 +6,14 @@ class TokenStorage {
   static String? accessTokenKey;
   static String? _refreshTokenKey;
 
-  bool isAuthorized = false;
+  static bool isAuthorized = false;
 
   static const String _accessTokenStorageKey = "_accessToken";
   static const String _refreshTokenStorageKey = "_refreshToken";
 
   static const _serverEndpoint = "http://3.71.89.121/users/api";
 
-  Future<void> checkAccessToken() async {
+  static Future<void> checkAccessToken() async {
     // if (kDebugMode) {
     //   SharedPreferences.getInstance().then((value) => value.clear());
     // }
@@ -31,16 +31,16 @@ class TokenStorage {
       return;
     }
 
-    accessTokenKey ??= await updateAccessToken();
+    updateAccessToken();
     return;
   }
 
-  Future<String?> updateAccessToken() async {
+  static void updateAccessToken() async {
     Dio dio = Dio();
 
     try {
       final response = await dio.post(
-        "$_serverEndpoint/access_token_recovery",
+        "http://3.71.89.121/users/api/access_token_recovery/",
         data: {
           "refresh_token": _refreshTokenKey,
         },
@@ -50,35 +50,31 @@ class TokenStorage {
         final accessToken = response.data["access_token"];
 
         setAccessToken(accessToken);
-
-        return accessToken;
       }
-    } catch (e) {
+    } on DioException catch (e) {
       debugPrint(e.toString());
-      return "update_all";
     }
-    return null;
   }
 
-  Future<void> setAccessToken(String accessToken) async {
+  static Future<void> setAccessToken(String accessToken) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    accessTokenKey = accessToken;
     prefs.setString(_accessTokenStorageKey, accessToken);
   }
 
-  Future<String?> getAccessToken() async {
+  static Future<String?> getAccessToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return prefs.getString(_accessTokenStorageKey);
   }
 
-  Future<void> setRefreshToken(String refreshToken) async {
+  static Future<void> setRefreshToken(String refreshToken) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    _refreshTokenKey = refreshToken;
     prefs.setString(_refreshTokenStorageKey, refreshToken);
   }
 
-  Future<String?> getRefreshToken() async {
+  static Future<String?> getRefreshToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return prefs.getString(_refreshTokenStorageKey);

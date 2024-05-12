@@ -26,8 +26,8 @@ class LoginCubit extends Cubit<LoginState> {
         final accessToken = response.data['access_token'];
         final refreshToken = response.data['refresh_token'];
 
-        GetIt.I<TokenStorage>().setAccessToken(accessToken);
-        GetIt.I<TokenStorage>().setRefreshToken(refreshToken);
+        TokenStorage.setAccessToken(accessToken);
+        TokenStorage.setRefreshToken(refreshToken);
 
         Future.delayed(const Duration(seconds: 1), () {
           emit(LoginSuccess());

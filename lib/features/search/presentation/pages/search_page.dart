@@ -178,8 +178,8 @@ class _SearchResultListState extends State<SearchResultList> {
                     collectionDescription: searchCollectionModelLocal!.results[index].description,
                     collectionCollectedAmount: double.parse(
                             searchCollectionModelLocal!.results[index].collectedAmountOnJar) +
-                        double.parse(state
-                            .foundedCollectionsModel.results[index].collectedAmountOnPlatform) +
+                        double.parse(
+                            searchCollectionModelLocal!.results[index].collectedAmountOnPlatform) +
                         double.parse(searchCollectionModelLocal!
                             .results[index].collectedAmountFromOtherRequisites),
                     collectionGoalAmount:
@@ -192,6 +192,8 @@ class _SearchResultListState extends State<SearchResultList> {
             ),
           );
         }
+        nextCollectionsPage = null;
+        searchCollectionModelLocal = null;
         return const Center(child: CircularProgressIndicator());
       },
     );

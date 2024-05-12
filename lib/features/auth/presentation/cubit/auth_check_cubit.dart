@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:trix_donation/core/storage/token_storage.dart';
 
@@ -11,9 +10,9 @@ class AuthCheckCubit extends Cubit<AuthCheckState> {
   void checkTokens() async {
     emit(AuthCheckChecking());
 
-    await GetIt.I<TokenStorage>().checkAccessToken();
+    await TokenStorage.checkAccessToken();
 
-    if (GetIt.I<TokenStorage>().isAuthorized) {
+    if (TokenStorage.isAuthorized) {
       emit(AuthCheckAuthorized());
     } else {
       emit(AuthCheckUnauthorized());
