@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:trix_donation/core/theme/colors.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
 import 'package:trix_donation/core/validators/auth_validators.dart';
 import 'package:trix_donation/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:trix_donation/features/auth/presentation/pages/email_verification_page.dart';
+
+import '../../../../core/storage/first_time_enter_storage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -139,7 +142,11 @@ class _LoginPageState extends State<LoginPage> {
                   listener: (context, state) {
                     if (state is LoginSuccess) {
                       // open home page and close everything else
-                      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                      if (GetIt.I<FirstTimeEnterStorage>().isFirstTimeEnter ?? true) {
+                        Navigator.pushNamedAndRemoveUntil(context, '/onBoarding', (route) => false);
+                      } else {
+                        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                      }
                     }
                     if (state is LoginFailure) {
                       ScaffoldMessenger.of(context).showSnackBar(

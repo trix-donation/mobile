@@ -27,7 +27,7 @@ class OnBoardingPage extends StatelessWidget {
       ),
       onFinish: () async {
         GetIt.I<FirstTimeEnterStorage>().setFirstTimeEnter(false);
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+        Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
       },
       headerBackgroundColor: primary100Color,
       centerBackground: true,

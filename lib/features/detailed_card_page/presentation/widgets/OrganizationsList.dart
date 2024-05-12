@@ -5,7 +5,7 @@ import 'package:trix_donation/features/detailed_card_page/data/models/get_select
 class OrganizationItem extends StatelessWidget {
   const OrganizationItem({super.key, required this.organizations});
 
-  final Organizations organizations;
+  final Organization organizations;
 
   @override
   Widget build(BuildContext context) {

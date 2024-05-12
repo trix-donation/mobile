@@ -1,203 +1,219 @@
+import 'dart:convert';
+
 class GetSelectedCollectionModel {
-  int? id;
-  Requisites? requisites;
-  List<Organizations>? organizations;
-  String? goalTitle;
-  String? description;
-  String? preview;
-  bool? active;
-  String? collectedAmountOnJar;
-  String? collectedAmountOnPlatform;
-  String? collectedAmountFromOtherRequisites;
-  String? goalAmount;
-  String? createdAt;
+  final int id;
+  final Requisites requisites;
+  final List<Organization> organizations;
+  final String goalTitle;
+  final String description;
+  final String? preview;
+  final bool active;
+  final String collectedAmountOnJar;
+  final String collectedAmountOnPlatform;
+  final String collectedAmountFromOtherRequisites;
+  final String goalAmount;
+  final DateTime createdAt;
 
-  GetSelectedCollectionModel(
-      {this.id,
-      this.requisites,
-      this.organizations,
-      this.goalTitle,
-      this.description,
-      this.preview,
-      this.active,
-      this.collectedAmountOnJar,
-      this.collectedAmountOnPlatform,
-      this.collectedAmountFromOtherRequisites,
-      this.goalAmount,
-      this.createdAt});
+  GetSelectedCollectionModel({
+    required this.id,
+    required this.requisites,
+    required this.organizations,
+    required this.goalTitle,
+    required this.description,
+    this.preview,
+    required this.active,
+    required this.collectedAmountOnJar,
+    required this.collectedAmountOnPlatform,
+    required this.collectedAmountFromOtherRequisites,
+    required this.goalAmount,
+    required this.createdAt,
+  });
 
-  GetSelectedCollectionModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    requisites = json['requisites'] != null ? new Requisites.fromJson(json['requisites']) : null;
-    if (json['organizations'] != null) {
-      organizations = <Organizations>[];
-      json['organizations'].forEach((v) {
-        organizations!.add(new Organizations.fromJson(v));
-      });
-    }
-    goalTitle = json['goal_title'];
-    description = json['description'];
-    preview = json['preview'];
-    active = json['active'];
-    collectedAmountOnJar = json['collected_amount_on_jar'];
-    collectedAmountOnPlatform = json['collected_amount_on_platform'];
-    collectedAmountFromOtherRequisites = json['collected_amount_from_other_requisites'];
-    goalAmount = json['goal_amount'];
-    createdAt = json['created_at'];
-  }
+  factory GetSelectedCollectionModel.fromRawJson(String str) =>
+      GetSelectedCollectionModel.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.requisites != null) {
-      data['requisites'] = this.requisites!.toJson();
-    }
-    if (this.organizations != null) {
-      data['organizations'] = this.organizations!.map((v) => v.toJson()).toList();
-    }
-    data['goal_title'] = this.goalTitle;
-    data['description'] = this.description;
-    data['preview'] = this.preview;
-    data['active'] = this.active;
-    data['collected_amount_on_jar'] = this.collectedAmountOnJar;
-    data['collected_amount_on_platform'] = this.collectedAmountOnPlatform;
-    data['collected_amount_from_other_requisites'] = this.collectedAmountFromOtherRequisites;
-    data['goal_amount'] = this.goalAmount;
-    data['created_at'] = this.createdAt;
-    return data;
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory GetSelectedCollectionModel.fromJson(Map<String, dynamic> json) =>
+      GetSelectedCollectionModel(
+        id: json["id"],
+        requisites: Requisites.fromJson(json["requisites"]),
+        organizations: json["organizations"] == null
+            ? []
+            : List<Organization>.from(json["organizations"]!.map((x) => Organization.fromJson(x))),
+        goalTitle: json["goal_title"],
+        description: json["description"],
+        preview: json["preview"],
+        active: json["active"],
+        collectedAmountOnJar: json["collected_amount_on_jar"],
+        collectedAmountOnPlatform: json["collected_amount_on_platform"],
+        collectedAmountFromOtherRequisites: json["collected_amount_from_other_requisites"],
+        goalAmount: json["goal_amount"],
+        createdAt: DateTime.parse(json["created_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "requisites": requisites?.toJson(),
+        "organizations":
+            organizations == null ? [] : List<dynamic>.from(organizations!.map((x) => x.toJson())),
+        "goal_title": goalTitle,
+        "description": description,
+        "preview": preview,
+        "active": active,
+        "collected_amount_on_jar": collectedAmountOnJar,
+        "collected_amount_on_platform": collectedAmountOnPlatform,
+        "collected_amount_from_other_requisites": collectedAmountFromOtherRequisites,
+        "goal_amount": goalAmount,
+        "created_at":
+            "${createdAt!.year.toString().padLeft(4, '0')}-${createdAt!.month.toString().padLeft(2, '0')}-${createdAt!.day.toString().padLeft(2, '0')}",
+      };
+}
+
+class Organization {
+  final int organizationId;
+  final String name;
+
+  Organization({
+    required this.organizationId,
+    required this.name,
+  });
+
+  factory Organization.fromRawJson(String str) => Organization.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Organization.fromJson(Map<String, dynamic> json) => Organization(
+        organizationId: json["organization_id"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "organization_id": organizationId,
+        "name": name,
+      };
 }
 
 class Requisites {
-  int? id;
-  String? monobankJarLink;
-  String? monobankJarNumber;
-  String? paypalEmail;
-  String? bitcoinWalletAddress;
-  String? ethereumWalletAddress;
-  String? usdtWalletAddress;
-  Null? extJarId;
-  int? moneyCollection;
-  List<BankCards>? bankCards;
-  List<OtherRequisites>? otherRequisites;
+  final int id;
+  final String monobankJarLink;
+  final String monobankJarNumber;
+  final String? paypalEmail;
+  final String? bitcoinWalletAddress;
+  final String? ethereumWalletAddress;
+  final String? usdtWalletAddress;
+  final dynamic extJarId;
+  final int? moneyCollection;
+  final List<BankCard>? bankCards;
+  final List<OtherRequisite>? otherRequisites;
 
-  Requisites(
-      {this.id,
-      this.monobankJarLink,
-      this.monobankJarNumber,
-      this.paypalEmail,
-      this.bitcoinWalletAddress,
-      this.ethereumWalletAddress,
-      this.usdtWalletAddress,
-      this.extJarId,
-      this.moneyCollection,
-      this.bankCards,
-      this.otherRequisites});
+  Requisites({
+    required this.id,
+    required this.monobankJarLink,
+    required this.monobankJarNumber,
+    this.paypalEmail,
+    this.bitcoinWalletAddress,
+    this.ethereumWalletAddress,
+    this.usdtWalletAddress,
+    this.extJarId,
+    this.moneyCollection,
+    this.bankCards,
+    this.otherRequisites,
+  });
 
-  Requisites.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    monobankJarLink = json['monobank_jar_link'];
-    monobankJarNumber = json['monobank_jar_number'];
-    paypalEmail = json['paypal_email'];
-    bitcoinWalletAddress = json['bitcoin_wallet_address'];
-    ethereumWalletAddress = json['ethereum_wallet_address'];
-    usdtWalletAddress = json['usdt_wallet_address'];
-    extJarId = json['extJarId'];
-    moneyCollection = json['money_collection'];
-    if (json['bank_cards'] != null) {
-      bankCards = <BankCards>[];
-      json['bank_cards'].forEach((v) {
-        bankCards!.add(new BankCards.fromJson(v));
-      });
-    }
-    if (json['other_requisites'] != null) {
-      otherRequisites = <OtherRequisites>[];
-      json['other_requisites'].forEach((v) {
-        otherRequisites!.add(new OtherRequisites.fromJson(v));
-      });
-    }
-  }
+  factory Requisites.fromRawJson(String str) => Requisites.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['monobank_jar_link'] = this.monobankJarLink;
-    data['monobank_jar_number'] = this.monobankJarNumber;
-    data['paypal_email'] = this.paypalEmail;
-    data['bitcoin_wallet_address'] = this.bitcoinWalletAddress;
-    data['ethereum_wallet_address'] = this.ethereumWalletAddress;
-    data['usdt_wallet_address'] = this.usdtWalletAddress;
-    data['extJarId'] = this.extJarId;
-    data['money_collection'] = this.moneyCollection;
-    if (this.bankCards != null) {
-      data['bank_cards'] = this.bankCards!.map((v) => v.toJson()).toList();
-    }
-    if (this.otherRequisites != null) {
-      data['other_requisites'] = this.otherRequisites!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory Requisites.fromJson(Map<String, dynamic> json) => Requisites(
+        id: json["id"],
+        monobankJarLink: json["monobank_jar_link"],
+        monobankJarNumber: json["monobank_jar_number"],
+        paypalEmail: json["paypal_email"],
+        bitcoinWalletAddress: json["bitcoin_wallet_address"],
+        ethereumWalletAddress: json["ethereum_wallet_address"],
+        usdtWalletAddress: json["usdt_wallet_address"],
+        extJarId: json["extJarId"],
+        moneyCollection: json["money_collection"],
+        bankCards: json["bank_cards"] == null
+            ? []
+            : List<BankCard>.from(json["bank_cards"]!.map((x) => BankCard.fromJson(x))),
+        otherRequisites: json["other_requisites"] == null
+            ? []
+            : List<OtherRequisite>.from(
+                json["other_requisites"]!.map((x) => OtherRequisite.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "monobank_jar_link": monobankJarLink,
+        "monobank_jar_number": monobankJarNumber,
+        "paypal_email": paypalEmail,
+        "bitcoin_wallet_address": bitcoinWalletAddress,
+        "ethereum_wallet_address": ethereumWalletAddress,
+        "usdt_wallet_address": usdtWalletAddress,
+        "extJarId": extJarId,
+        "money_collection": moneyCollection,
+        "bank_cards":
+            bankCards == null ? [] : List<dynamic>.from(bankCards!.map((x) => x.toJson())),
+        "other_requisites": otherRequisites == null
+            ? []
+            : List<dynamic>.from(otherRequisites!.map((x) => x.toJson())),
+      };
 }
 
-class BankCards {
-  int? id;
-  String? bankName;
-  String? cardNumber;
+class BankCard {
+  final int id;
+  final String bankName;
+  final String cardNumber;
 
-  BankCards({this.id, this.bankName, this.cardNumber});
+  BankCard({
+    required this.id,
+    required this.bankName,
+    required this.cardNumber,
+  });
 
-  BankCards.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    bankName = json['bank_name'];
-    cardNumber = json['card_number'];
-  }
+  factory BankCard.fromRawJson(String str) => BankCard.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['bank_name'] = this.bankName;
-    data['card_number'] = this.cardNumber;
-    return data;
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory BankCard.fromJson(Map<String, dynamic> json) => BankCard(
+        id: json["id"],
+        bankName: json["bank_name"],
+        cardNumber: json["card_number"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "bank_name": bankName,
+        "card_number": cardNumber,
+      };
 }
 
-class OtherRequisites {
-  int? id;
-  String? name;
-  String? value;
+class OtherRequisite {
+  final int id;
+  final String name;
+  final String value;
 
-  OtherRequisites({this.id, this.name, this.value});
+  OtherRequisite({
+    required this.id,
+    required this.name,
+    required this.value,
+  });
 
-  OtherRequisites.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    value = json['value'];
-  }
+  factory OtherRequisite.fromRawJson(String str) => OtherRequisite.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['value'] = this.value;
-    return data;
-  }
-}
+  String toRawJson() => json.encode(toJson());
 
-class Organizations {
-  int? organizationId;
-  String? name;
+  factory OtherRequisite.fromJson(Map<String, dynamic> json) => OtherRequisite(
+        id: json["id"],
+        name: json["name"],
+        value: json["value"],
+      );
 
-  Organizations({this.organizationId, this.name});
-
-  Organizations.fromJson(Map<String, dynamic> json) {
-    organizationId = json['organization_id'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['organization_id'] = this.organizationId;
-    data['name'] = this.name;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "value": value,
+      };
 }

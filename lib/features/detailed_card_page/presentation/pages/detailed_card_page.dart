@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
 import 'package:trix_donation/core/widgets/line_progress_of_zbir.dart';
+import 'package:trix_donation/features/detailed_card_page/data/models/get_selected_collection_model.dart';
 import 'package:trix_donation/features/detailed_card_page/presentation/cubit/get_selected_collection_cubit.dart';
 
+import '../../../making_donation/presentation/pages/choose_requizites.dart';
 import '../widgets/OrganizationsList.dart';
 
 class DetailedCardPage extends StatefulWidget {
@@ -18,6 +20,8 @@ class DetailedCardPage extends StatefulWidget {
 
 class _DetailedCardPageState extends State<DetailedCardPage> {
   GetSelectedCollectionCubit getSelectedCollectionsCubit = GetSelectedCollectionCubit();
+
+  late Requisites requisites;
 
   @override
   void initState() {
@@ -60,6 +64,8 @@ class _DetailedCardPageState extends State<DetailedCardPage> {
               double collected = collectedAmountFromOtherRequisites +
                   collectedAmountOnPlatform +
                   collectedAmountOnJar;
+
+              requisites = state.collection.requisites;
 
               return CustomScrollView(
                 slivers: <Widget>[
@@ -122,7 +128,16 @@ class _DetailedCardPageState extends State<DetailedCardPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 backgroundColor: Theme.of(context).colorScheme.primaryContainer,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChooseRequzites(
+                      requisites: requisites,
+                    ),
+                  ),
+                );
+              },
               child: Text('Пожертвувати',
                   style: bodySemiBoldText.copyWith(
                       color: Theme.of(context).colorScheme.onPrimaryContainer)),

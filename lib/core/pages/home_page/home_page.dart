@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:trix_donation/core/cubits/get_collections/GetCollectionsModel.dart';
 import 'package:trix_donation/core/cubits/get_collections/get_collections_cubit.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
 import 'package:trix_donation/core/widgets/zbir_card.dart';
-
-import '../../storage/first_time_enter_storage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,15 +28,12 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _scrollController.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (GetIt.I<FirstTimeEnterStorage>().isFirstTimeEnter ?? true) {
-      Navigator.pushNamedAndRemoveUntil(context, '/onBoarding', (route) => false);
-    }
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
