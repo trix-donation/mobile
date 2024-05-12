@@ -35,12 +35,6 @@ class _HomePageCollectionsListState extends State<HomePageCollectionsList> {
     });
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
   bool isLoadingMore = false;
   void loadNextCollections() async {
     if (isLoadingMore) {
@@ -54,6 +48,12 @@ class _HomePageCollectionsListState extends State<HomePageCollectionsList> {
       getCollectionModelLocal?.results.addAll(getCollectionModelHere!.results);
     });
     isLoadingMore = false;
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,8 +86,6 @@ class _HomePageCollectionsListState extends State<HomePageCollectionsList> {
               itemCount: getCollectionModelLocal!.results.length,
               itemBuilder: (context, index) {
                 return ZbirCard(
-                  organizationName: 'Хтось',
-                  organizationType: 'Щось',
                   collectionImage: getCollectionModelLocal!.results[index].preview,
                   collectionTitle: getCollectionModelLocal!.results[index].goalTitle,
                   collectionDescription: getCollectionModelLocal!.results[index].description,

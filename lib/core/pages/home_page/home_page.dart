@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
 
+import '../../../features/search/presentation/pages/search_page.dart';
 import 'home_page_collections_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _HomePageState extends State<HomePage> {
 
   var pages = [
     const HomePageCollectionsList(),
+    const SearchPage(),
   ];
 
   @override

@@ -8,8 +8,6 @@ import 'line_progress_of_zbir.dart';
 class ZbirCard extends StatelessWidget {
   const ZbirCard(
       {super.key,
-      required this.organizationName,
-      required this.organizationType,
       required this.collectionImage,
       required this.collectionTitle,
       required this.collectionDescription,
@@ -17,8 +15,6 @@ class ZbirCard extends StatelessWidget {
       required this.collectionGoalAmount,
       required this.collectionId});
 
-  final String organizationName;
-  final String organizationType;
   final String collectionImage;
   final String collectionTitle;
   final String collectionDescription;
