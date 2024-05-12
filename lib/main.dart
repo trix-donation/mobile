@@ -5,6 +5,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trix_donation/core/pages/home_page/home_page.dart';
 import 'package:trix_donation/core/storage/first_time_enter_storage.dart';
 import 'package:trix_donation/core/theme/colors.dart';
@@ -39,6 +40,18 @@ void addInterceptors(Dio dio) {
   dio.interceptors.add(PrettyDioLogger());
   // dio.interceptors.add(ContentTypeInterceptor());
   dio.interceptors.add(AccessInterceptor());
+  dio.interceptors.add(InterceptorsWrapper(
+    onError: (error, handler) async {
+      if (error.response?.data['code'] == 'token_not_valid') {
+        var message = await GetIt.I<TokenStorage>().updateAccessToken();
+        if (message == "update_all") {
+          SharedPreferences.getInstance().then((value) => value.clear());
+          Navigator.pushNamedAndRemoveUntil(GetIt.I(), '/login', (route) => false);
+        }
+      }
+      return handler.next(error);
+    },
+  ));
 }
 
 class MyApp extends StatelessWidget {

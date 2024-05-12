@@ -55,6 +55,7 @@ class TokenStorage {
       }
     } catch (e) {
       debugPrint(e.toString());
+      return "update_all";
     }
     return null;
   }

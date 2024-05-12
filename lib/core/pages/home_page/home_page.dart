@@ -111,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                             .getCollectionModel.results[index].collectedAmountFromOtherRequisites),
                     collectionGoalAmount:
                         double.parse(state.getCollectionModel.results[index].goalAmount),
+                    collectionId: state.getCollectionModel.results[index].id,
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
