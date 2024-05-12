@@ -21,7 +21,7 @@ class DetailedCardPage extends StatefulWidget {
 class _DetailedCardPageState extends State<DetailedCardPage> {
   GetSelectedCollectionCubit getSelectedCollectionsCubit = GetSelectedCollectionCubit();
 
-  late Requisites requisites;
+  late Requisites? requisites;
 
   @override
   void initState() {
@@ -101,10 +101,10 @@ class _DetailedCardPageState extends State<DetailedCardPage> {
                           child: ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: state.collection.organizations?.length ?? 0,
+                            itemCount: state.collection.organizations.length ?? 0,
                             itemBuilder: (context, index) {
                               return OrganizationItem(
-                                organizations: state.collection.organizations![index],
+                                organizations: state.collection.organizations[index],
                               );
                             },
                           ),
@@ -168,7 +168,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 300.0;
+  double get maxExtent => 200;
 
   @override
   double get minExtent => 0;

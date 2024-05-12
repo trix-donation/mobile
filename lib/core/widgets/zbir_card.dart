@@ -44,7 +44,7 @@ class ZbirCard extends StatelessWidget {
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                 child: CachedNetworkImage(
                   imageUrl: collectionImage,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                       Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
                 ),

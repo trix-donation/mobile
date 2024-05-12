@@ -14,7 +14,7 @@ class GetCollectionsCubit extends Cubit<GetCollectionsState> {
 
   static const String _endpoint = 'http://3.71.89.121/money_collections/api/';
 
-  GetCollectionsModel? getCollectionModel;
+  GetCollectionsModel getCollectionModel = GetCollectionsModel(count: 0, next: null, results: []);
 
   void getCollectionsFromNewToOld() async {
     emit(GetCollectionsLoading());
@@ -28,7 +28,11 @@ class GetCollectionsCubit extends Cubit<GetCollectionsState> {
     }
   }
 
-  Future<GetCollectionsModel?> getCollectionNextPage(String next) async {
+  Future<GetCollectionsModel?> getCollectionNextPage(String? next) async {
+    if (next == null) {
+      return null;
+    }
+
     try {
       final response = await dio.get(next);
       getCollectionModel = GetCollectionsModel.fromJson(response.data);
@@ -39,8 +43,8 @@ class GetCollectionsCubit extends Cubit<GetCollectionsState> {
     return getCollectionModel;
   }
 
-  void addOtherCollections(GetCollectionsModel getCollectionsModel) {
-    getCollectionModel!.results.addAll(getCollectionsModel.results);
-    emit(GetCollectionsLoadedSuccessful(getCollectionModel!));
+  void addNextCollections(GetCollectionsModel getCollectionsModel) {
+    getCollectionModel.results.addAll(getCollectionsModel.results);
+    emit(GetCollectionsLoadedSuccessful(getCollectionModel));
   }
 }

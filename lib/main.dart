@@ -37,16 +37,23 @@ void main() {
 }
 
 void addInterceptors(Dio dio) {
-  dio.interceptors.add(PrettyDioLogger());
+  dio.interceptors.add(PrettyDioLogger(
+    requestHeader: true,
+    requestBody: true,
+    responseBody: true,
+    responseHeader: true,
+  ));
   // dio.interceptors.add(ContentTypeInterceptor());
   dio.interceptors.add(AccessInterceptor());
   dio.interceptors.add(InterceptorsWrapper(
     onError: (error, handler) async {
-      if (error.response?.data['code'] == 'token_not_valid') {
-        var message = await GetIt.I<TokenStorage>().updateAccessToken();
-        if (message == "update_all") {
-          SharedPreferences.getInstance().then((value) => value.clear());
-          Navigator.pushNamedAndRemoveUntil(GetIt.I(), '/login', (route) => false);
+      if (error.response?.statusCode != 502) {
+        if (error.response?.data['code'] == 'token_not_valid') {
+          var message = await GetIt.I<TokenStorage>().updateAccessToken();
+          if (message == "update_all") {
+            SharedPreferences.getInstance().then((value) => value.clear());
+            Navigator.pushNamedAndRemoveUntil(GetIt.I(), '/login', (route) => false);
+          }
         }
       }
       return handler.next(error);

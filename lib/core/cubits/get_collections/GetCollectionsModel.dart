@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class GetCollectionsModel {
   int count;
-  String next;
+  String? next;
   String? previous;
   List<Result> results;
 

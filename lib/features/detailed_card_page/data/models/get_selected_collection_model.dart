@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class GetSelectedCollectionModel {
   final int id;
-  final Requisites requisites;
+  final Requisites? requisites;
   final List<Organization> organizations;
   final String goalTitle;
   final String description;
@@ -16,7 +16,7 @@ class GetSelectedCollectionModel {
 
   GetSelectedCollectionModel({
     required this.id,
-    required this.requisites,
+    this.requisites,
     required this.organizations,
     required this.goalTitle,
     required this.description,
@@ -37,7 +37,7 @@ class GetSelectedCollectionModel {
   factory GetSelectedCollectionModel.fromJson(Map<String, dynamic> json) =>
       GetSelectedCollectionModel(
         id: json["id"],
-        requisites: Requisites.fromJson(json["requisites"]),
+        requisites: json["requisites"] != null ? Requisites.fromJson(json["requisites"]) : null,
         organizations: json["organizations"] == null
             ? []
             : List<Organization>.from(json["organizations"]!.map((x) => Organization.fromJson(x))),
