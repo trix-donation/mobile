@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
 
 import '../../../features/search/presentation/pages/search_page.dart';
+import '../../../features/spilnota/presentation/pages/spilnota_page.dart';
 import 'home_page_collections_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,10 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _bottomNavIndex = 0;
 
-  var pages = [
-    const HomePageCollectionsList(),
-    const SearchPage(),
-  ];
+  var pages = [const HomePageCollectionsList(), const SearchPage(), const SpilnotaPage()];
 
   @override
   Widget build(BuildContext context) {
