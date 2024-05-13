@@ -45,7 +45,7 @@ class ChooseRequzites extends StatelessWidget {
                 iconColor: Theme.of(context).colorScheme.onBackground,
                 onTap: () {
                   showListTileInfo(
-                      context, 200, "Номер картки банки", requisites!.monobankJarNumber, 1);
+                      context, 250, "Номер картки банки", requisites!.monobankJarNumber, 1);
                 },
               ),
               requisites?.paypalEmail != "" && requisites?.paypalEmail != null
@@ -110,7 +110,7 @@ class ChooseRequzites extends StatelessWidget {
 
   void showListTileInfo(
       BuildContext context, double height, String title, String requizite, int maxlinesData) {
-    showModalBottomSheet(
+    showBottomSheet(
       context: context,
       builder: (context) {
         return Container(
@@ -150,7 +150,7 @@ class ChooseRequzites extends StatelessWidget {
 
   void showBankCardsTileInfo(BuildContext context, double height, String title,
       List<BankCard>? bankCards, int maxlinesData) {
-    showModalBottomSheet(
+    showBottomSheet(
       context: context,
       builder: (context) {
         return SingleChildScrollView(
@@ -200,7 +200,7 @@ class ChooseRequzites extends StatelessWidget {
 
   void showOtherRequisitesTileInfo(BuildContext context, double height, String title,
       List<OtherRequisite>? otherRequisites, int maxlinesData) {
-    showModalBottomSheet(
+    showBottomSheet(
       context: context,
       builder: (context) {
         return SingleChildScrollView(

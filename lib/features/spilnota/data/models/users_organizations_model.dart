@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class UsersOrganizationsModel {
-  int? organizationId;
+  int organizationId;
   String? avatar;
   String? name;
   String? twitter;
@@ -15,7 +15,7 @@ class UsersOrganizationsModel {
   List<int>? moneyCollections;
 
   UsersOrganizationsModel({
-    this.organizationId,
+    required this.organizationId,
     this.avatar,
     this.name,
     this.twitter,

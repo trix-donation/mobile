@@ -17,14 +17,18 @@ class OrganizationItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Збором займаються: ",
-                  style:
-                      bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground)),
+              Expanded(
+                child: Text("Збором займаються: ",
+                    style:
+                        bodyMediumText.copyWith(color: Theme.of(context).colorScheme.onBackground)),
+              ),
               const SizedBox(width: 4),
-              Text(
-                organizations.name ?? 'Не вказано',
-                style: bodySemiBoldText.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
+              Expanded(
+                child: Text(
+                  organizations.name ?? 'Не вказано',
+                  style: bodySemiBoldText.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
                 ),
               ),
             ],

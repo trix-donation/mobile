@@ -93,4 +93,21 @@ class MyOrganizationCubit extends Cubit<MyOrganizationState> {
       emit(MyOrganizationError(e.response?.data['message'] ?? 'Помилка'));
     }
   }
+
+  String _someOrganizationEndpoint = 'http://3.71.89.121/organizations/api/organizations';
+
+  void getSomeOrganization(int id) async {
+    emit(MyOrganizationLoading());
+
+    try {
+      final response = await dio.get('$_someOrganizationEndpoint/$id/');
+      if (response.statusCode == 200) {
+        final myOrganizationModel = MyOrganizationModel.fromJson(response.data);
+        emit(MyOrganizationLoaded(myOrganizationModel));
+        return;
+      }
+    } on DioException catch (e) {
+      emit(MyOrganizationError(e.response?.data['message'] ?? 'Помилка'));
+    }
+  }
 }

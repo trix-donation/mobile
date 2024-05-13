@@ -7,6 +7,7 @@ import 'package:trix_donation/core/widgets/zbir_card.dart';
 import 'package:trix_donation/features/organization/presentation/manager/active_zbory_cubit.dart';
 import 'package:trix_donation/features/organization/presentation/manager/inactive_zbory_cubit.dart';
 import 'package:trix_donation/features/organization/presentation/manager/my_organization_cubit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyOrganizationPage extends StatefulWidget {
   const MyOrganizationPage({super.key});
@@ -140,6 +141,15 @@ class _MyOrganizationPageState extends State<MyOrganizationPage>
         bloc: activeZboryCubit,
         builder: (context, state) {
           if (state is ActiveZboryLoaded) {
+            if (state.zboryModel.results!.length == 0) {
+              return Center(
+                child: Text(
+                  'Активні збори відсутні',
+                  style: bodyMediumText,
+                ),
+              );
+            }
+
             return Padding(
               padding: const EdgeInsets.all(20.0),
               child: ListView.separated(
@@ -235,7 +245,9 @@ class ProfileIcons extends StatelessWidget {
                     radius: 30,
                     backgroundColor: primary300Color,
                     child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          launchUrl(Uri.parse(instagram!));
+                        },
                         icon: const Icon(
                           Icons.camera_alt,
                           size: 30,
@@ -251,7 +263,9 @@ class ProfileIcons extends StatelessWidget {
                     radius: 30,
                     backgroundColor: primary300Color,
                     child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          launchUrl(Uri.parse(facebook!));
+                        },
                         icon: const Icon(
                           Icons.face,
                           size: 30,
@@ -267,7 +281,9 @@ class ProfileIcons extends StatelessWidget {
                     radius: 30,
                     backgroundColor: primary300Color,
                     child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          launchUrl(Uri.parse(twitter!));
+                        },
                         icon: const Icon(
                           Icons.post_add,
                           size: 30,
@@ -283,7 +299,9 @@ class ProfileIcons extends StatelessWidget {
                     radius: 30,
                     backgroundColor: primary300Color,
                     child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          launchUrl(Uri.parse(customUrl!));
+                        },
                         icon: const Icon(
                           Icons.api_rounded,
                           size: 30,

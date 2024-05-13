@@ -20,6 +20,7 @@ import 'package:trix_donation/features/personal_profile/presentation/pages/perso
 import 'core/interceptors/access_interceptor.dart';
 import 'core/storage/token_storage.dart';
 import 'features/auth/presentation/pages/welcome_auth_page.dart';
+import 'features/create_collection/presentation/pages/create_collection_page.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -103,6 +104,12 @@ class MyApp extends StatelessWidget {
               return PageTransition(
                 child: const CreatingOrganizationPage(),
                 type: PageTransitionType.rightToLeftWithFade,
+              );
+            case '/create_collection':
+              return PageTransition(
+                child: const CreateCollectionPage(),
+                type: PageTransitionType.topToBottom,
+                duration: const Duration(milliseconds: 800),
               );
             default:
               return null;

@@ -6,6 +6,8 @@ import 'package:trix_donation/core/theme/colors.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
 import 'package:trix_donation/features/spilnota/presentation/cubit/get_organizations_cubit.dart';
 
+import '../../../organization/presentation/pages/organization_page.dart';
+
 class SpilnotaPage extends StatefulWidget {
   const SpilnotaPage({super.key});
 
@@ -98,7 +100,16 @@ class _SpilnotaPageState extends State<SpilnotaPage> {
                                 backgroundColor: accent200Color,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10))),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OrganizationPage(
+                                    organizationId: state.organizations[index].organizationId,
+                                  ),
+                                ),
+                              );
+                            },
                             child: Text(
                               'Переглянути',
                               style: bodyMedium14Text.copyWith(
@@ -118,7 +129,7 @@ class _SpilnotaPageState extends State<SpilnotaPage> {
                   maxCrossAxisExtent: 200,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: 2 / 3.4),
+                  childAspectRatio: 2 / 3.7),
             ),
           );
         }

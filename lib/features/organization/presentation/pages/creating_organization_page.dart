@@ -68,7 +68,7 @@ class _CreatingOrganizationPageState extends State<CreatingOrganizationPage> {
                   controller: _userDetailsController,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    labelText: 'Опис організації',
+                    labelText: 'Чому ми вас маємо затвердити?',
                     labelStyle: bodyMedium14Text.copyWith(
                         color: Theme.of(context).colorScheme.onBackground),
                     hintText:

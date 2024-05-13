@@ -16,16 +16,16 @@ class UsersOrganizationsCubit extends Cubit<UsersOrganizationsState> {
 
   UsersOrganizationsModel? usersOrganizationsModel;
 
-  void initData() async {
+  Future<int?> getOganizationId() async {
     emit(UsersOrganizationsLoading());
 
     try {
       final response = await dio.get(_endpoint);
       if (response.statusCode == 200) {
-        final usersOrganizationsModel = UsersOrganizationsModel.fromJson(response.data);
-        this.usersOrganizationsModel = usersOrganizationsModel;
-        emit(UsersOrganizationsLoaded(usersOrganizationsModel));
-        return;
+        final organization_id = response.data[0]['organization_id'];
+        // this.usersOrganizationsModel = usersOrganizationsModel;
+        // emit(UsersOrganizationsLoaded(usersOrganizationsModel));
+        return organization_id;
       }
     } on DioException catch (e) {
       emit(UsersOrganizationsError(e.response?.data['message'] ?? 'Помилка'));
