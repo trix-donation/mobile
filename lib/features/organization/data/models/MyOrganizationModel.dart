@@ -2,18 +2,18 @@ import 'dart:convert';
 
 class MyOrganizationModel {
   String name;
-  String twitter;
-  String instagram;
-  String facebook;
-  String customUrl;
-  dynamic avatar;
+  String? twitter;
+  String? instagram;
+  String? facebook;
+  String? customUrl;
+  String avatar;
 
   MyOrganizationModel({
     required this.name,
-    required this.twitter,
-    required this.instagram,
-    required this.facebook,
-    required this.customUrl,
+    this.twitter,
+    this.instagram,
+    this.facebook,
+    this.customUrl,
     required this.avatar,
   });
 

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:trix_donation/core/theme/text_style.dart';
 import 'package:trix_donation/features/organization/presentation/manager/my_organization_cubit.dart';
 
@@ -22,6 +25,18 @@ class _CreatingOrganizationPageState extends State<CreatingOrganizationPage> {
   final _customController = TextEditingController();
   final _edrpouController = TextEditingController();
   bool _isFoundation = false;
+
+  File? _image;
+
+  void getImageData() async {
+    final ImagePicker picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage == null) {
+      return;
+    } else {
+      _image = File(pickedImage.path);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +124,10 @@ class _CreatingOrganizationPageState extends State<CreatingOrganizationPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                OutlinedButton(
+                    onPressed: () => getImageData(),
+                    child: Text('Завантажити логотип', style: bodyMediumText)),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -146,6 +165,7 @@ class _CreatingOrganizationPageState extends State<CreatingOrganizationPage> {
                     myOrganizationCubit.createOrganization(
                       name: _nameController.text,
                       user_details: _userDetailsController.text,
+                      image: _image,
                       instagram_url:
                           _instagramController.text == '' ? null : _instagramController.text,
                       twitter_url: _twitterController.text == '' ? null : _twitterController.text,
