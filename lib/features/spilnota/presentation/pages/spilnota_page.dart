@@ -79,9 +79,12 @@ class _SpilnotaPageState extends State<SpilnotaPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
+                          child: AutoSizeText(
+                            maxLines: 2,
+                            maxFontSize: 16,
                             state.organizations[index].name,
-                            style: bodySemiBold14Text,
+                            style: bodySemiBold14Text.copyWith(
+                                color: Theme.of(context).colorScheme.onBackground),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -96,9 +99,7 @@ class _SpilnotaPageState extends State<SpilnotaPage> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10))),
                             onPressed: () {},
-                            child: AutoSizeText(
-                              maxLines: 2,
-                              maxFontSize: 16,
+                            child: Text(
                               'Переглянути',
                               style: bodyMedium14Text.copyWith(
                                   color: Theme.of(context).colorScheme.onBackground),
