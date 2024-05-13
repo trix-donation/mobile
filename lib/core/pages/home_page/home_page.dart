@@ -30,7 +30,9 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.person_rounded),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/personal_profile');
+            },
           ),
         ],
         title: const Center(child: Text('TRIX Donation')),

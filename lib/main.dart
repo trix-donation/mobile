@@ -14,6 +14,7 @@ import 'package:trix_donation/features/auth/presentation/pages/forgot_password_p
 import 'package:trix_donation/features/auth/presentation/pages/login_page.dart';
 import 'package:trix_donation/features/auth/presentation/pages/register_page.dart';
 import 'package:trix_donation/features/onBoarding/presentation/pages/onBoarding_page.dart';
+import 'package:trix_donation/features/personal_profile/presentation/pages/personal_profile_page.dart';
 
 import 'core/interceptors/access_interceptor.dart';
 import 'core/storage/token_storage.dart';
@@ -91,6 +92,11 @@ class MyApp extends StatelessWidget {
               return PageTransition(
                 child: const ForgotPasswordPage(),
                 type: PageTransitionType.bottomToTop,
+              );
+            case '/personal_profile':
+              return PageTransition(
+                child: const PersonalProfilePage(),
+                type: PageTransitionType.rightToLeftWithFade,
               );
             default:
               return null;
